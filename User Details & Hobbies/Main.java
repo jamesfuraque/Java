@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
 * This simple program gets the
@@ -5,7 +6,9 @@ import java.util.Scanner;
 * and printing it back to them
  *
  * @author James Furaque / Jam Furaque
- * @version 1.0
+ * @version 1.1
+ * In this version, I also implemented validations for
+ * Age & Street Number
 **/
 
 public class Main {
@@ -13,7 +16,7 @@ public class Main {
 
         Scanner scan = new Scanner(System.in);
 
-    //THIS IS FOR THE USER'S NAME.
+    // USER'S NAME (FIRST NAME & LAST NAME).
         System.out.println("Welcome to my simple program!");
         System.out.println("Enter your first name: ");
         String firstName = scan.nextLine();
@@ -21,16 +24,41 @@ public class Main {
         String lastName = scan.nextLine();
         String fullName = (firstName + " " +  lastName);
 
-    //THIS IS FOR THE USER'S AGE.
-        System.out.println("\nPlease, enter your Age:");
-        byte age = scan.nextByte();
+    // USER'S AGE.
+        byte age = -1;
+        while (age < 0) {
+            System.out.println("Please, enter your age:");
+            try {
+                age = scan.nextByte();
+                if (age < 0) {
+                    System.out.println("Age must be more than 0. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid integer.");
+                scan.next();
+            }
+        }
         scan.nextLine();
 
-    //THIS IS FOR THE USER'S ADDRESS.
+    // USER'S ADDRESS.
         System.out.println("\n\nThis is for your Address.\nPlease provide the specific details below.");
         System.out.println("(Street Number/Street, City, Province, Postal Code)\n ");
-        System.out.println("Street Number: ");
-        String streetNumber = scan.nextLine();
+
+        // STREET NUMBER WITH VALIDATION
+        int streetNumber = -1;
+        while (streetNumber < 0){
+            System.out.println("Street Number: ");
+            try {
+                streetNumber = scan.nextInt();
+                if (streetNumber < 0){
+                    System.out.println("Please enter a valid street number.");
+                }
+            } catch (InputMismatchException e){
+                System.out.println("Please enter a valid street number.");
+                scan.next();
+            }
+        }
+        scan.nextLine();
 
         System.out.println("Street Name:");
         String streetName = scan.nextLine();
@@ -66,5 +94,9 @@ public class Main {
 
 
 
+    }
+    @Override
+    public String toString() {
+        return "Main []";
     }
 }
